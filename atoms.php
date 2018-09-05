@@ -8,11 +8,11 @@ add_action( 'admin_menu', 'plugin_menu' );
 
 /** Step 1. */
 function plugin_menu() {
-	add_options_page( 'My Plugin Options', 'My Plugin', 'manage_options', 'my-unique-identifier', 'plugin_options' );
+	add_options_page( 'Atoms', 'Atoms', 'manage_options', 'atoms', 'atoms_options' );
 }
 
 /** Step 3. */
-function plugin_options() {
+function atoms_options() {
 	if ( !current_user_can( 'manage_options' ) )  {
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
