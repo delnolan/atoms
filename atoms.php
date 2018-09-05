@@ -27,6 +27,20 @@ function pretty_dropdowns_css()
 
 add_action('wp_enqueue_scripts', 'pretty_dropdowns_css');
 
+//Add Checkator
+function checkator_js() {
+    //Load jQuery before checkator
+    wp_enqueue_script('jquery');
+    wp_enqueue_script( 'checkator_js', plugin_dir_url( __FILE__ ) . 'assets/fm.checkator.jquery.js' );
+}
+add_action('wp_enqueue_scripts', 'checkator_js');
+function checkator_css()
+{
+    wp_enqueue_style( 'checkator_css', plugin_dir_url( __FILE__ ) . 'assets/fm.checkator.jquery.css' );
+}
+
+add_action('wp_enqueue_scripts', 'checkator_css');
+
 function atoms_options()
 {
     if (!current_user_can('manage_options')) {
@@ -396,12 +410,63 @@ function hook_css()
         fieldset {
             border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
         }
+        .checkator_element.checkbox {
+            border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
+            width: 100%;
+            height: 100%;
+        }
+        div.checkator_holder.radio{
+            width: 14px !important;
+            height: 14px !important;
+        }
+
+        .checkator_element.radio {
+            border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
+            width: 100%;
+            height: 100%;
+        }
+        .checkator_source:checked+.checkator_element:after {
+            background-color: rgb(<?php echo $primaryColor; ?>);
+            border: 2px solid rgba(<?php echo $primaryColor; ?>,0.5);
+        }
+        .checkator_source:hover+.checkator_element { /* Hovered element */
+            /* Bug: There is a bug in chrome preventing this from working correctly */
+            background-color: rgba(<?php echo $primaryColor; ?>, 0.1);
+            border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
+        }
+        .checkator_source:focus+.checkator_element { /* Focused element */
+            border: 2px solid rgba(<?php echo $primaryColor; ?>, 0.1);
+        }
+        .checkator_source:checked+.checkator_element:after {
+            top: 50%;
+            left:50%;
+            width: 7px;
+            height: 7px;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        button, input[type="button"], input[type="submit"]{
+             background-color: rgba(<?php echo $primaryColor; ?>,0.8);
+         }
+        button, input[type="button"]:hover, input[type="submit"]:hover{
+            background-color: rgba(<?php echo $primaryColor; ?>,1);
+        }
+        .prettydropdown > ul{
+            border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
+        }
+        .prettydropdown > ul:focus, .prettydropdown:not(.disabled) > ul:hover {
+            border: 1px solid rgba(<?php echo $primaryColor; ?>,0.9);
+        }
+        .prettydropdown.arrow > ul > li.selected:before{
+            border-top-color: rgba(<?php echo $primaryColor; ?>,0.5);
+        }
     </style>
     <script>
         jQuery(document).ready(function() {
             jQuery('select').prettyDropdown({
                 classic:true
             });
+            jQuery("input[type='checkbox']").checkator();
+            jQuery("input[type='radio']").checkator();
         });
     </script>
 
