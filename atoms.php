@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: Atoms
- * Description: Set Options in the admin panel
+ * Description: Set design elements in WordPress backend.
  */
 /** Step 2 (from text above). */
 add_action( 'admin_menu', 'plugin_menu' );
 
 /** Step 1. */
 function plugin_menu() {
-	add_options_page( 'My Plugin Options', 'My Plugin', 'manage_options', 'my-unique-identifier', 'plugin_options' );
+	add_options_page( 'Atoms', 'Atoms', 'manage_options', 'atoms', 'plugin_options' );
 }
 
 /** Step 3. */
