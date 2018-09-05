@@ -3,16 +3,30 @@
  * Plugin Name: Atoms
  * Description: Set Options in the admin panel
  */
-/** Step 2 (from text above). */
+
 add_action('admin_menu', 'plugin_menu');
 
-/** Step 1. */
+
 function plugin_menu()
 {
     add_options_page('Atoms', 'Atoms', 'manage_options', 'atoms', 'atoms_options');
 }
 
-/** Step 3. */
+
+//Add Pretty dropdowns
+function pretty_dropdowns_js() {
+    //Load jQuery before pretty dropdowns
+    wp_enqueue_script('jquery');
+    wp_enqueue_script( 'pretty_dropdowns_js', plugin_dir_url( __FILE__ ) . 'assets/jquery.prettydropdowns.js' );
+}
+add_action('wp_enqueue_scripts', 'pretty_dropdowns_js');
+function pretty_dropdowns_css()
+{
+    wp_enqueue_style( 'pretty_dropdowns_css', plugin_dir_url( __FILE__ ) . 'assets/prettydropdowns.css' );
+}
+
+add_action('wp_enqueue_scripts', 'pretty_dropdowns_css');
+
 function atoms_options()
 {
     if (!current_user_can('manage_options')) {
@@ -261,9 +275,16 @@ function hook_css()
     //Apply the style for the google font
     ?>
     <style>
-        p, div, h1, h2, h3, h4, h5, h6 , a{
+        p, div, h1, h2, h3, h4, h5, h6 , a , label, .page .panel-content .entry-title, .page-title, body.page:not(.twentyseventeen-front-page) .entry-title{
+             font-family: '<?php echo html_entity_decode($googleFontFamily); ?>';
+             color: rgba(<?php echo $primaryColor; ?>, 0.9);
+         }
+        input , textarea{
             font-family: '<?php echo html_entity_decode($googleFontFamily); ?>';
-            color: rgba(<?php echo $primaryColor; ?>, 0.9);
+            color: rgba(<?php echo $primaryColor; ?>, 0.6);
+        }
+        input:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="range"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="week"]:focus, input[type="time"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="color"]:focus, textarea:focus {
+            color: rgba(<?php echo $primaryColor; ?>, 1);
         }
         h1, .entry-content h1, .comment-content h1{
             font-size: <?php echo $h1Size;  ?>px;
@@ -341,7 +362,50 @@ function hook_css()
         #page{
             background-color: rgba(<?php echo $primaryColor; ?>, 0.1);
         }
+        button{
+            font-family: <?php echo $googleFontFamily; ?>;
+            text-transform: uppercase;
+            background-color: rgba(<?php echo $primaryColor; ?>,0.5);
+            color: #ffffff;
+            border-radius: 2px;
+            border: 1px solid rgb(<?php echo $primaryColor; ?>)
+        }
+        button:hover{
+            background-color: rgba(<?php echo $primaryColor; ?>,0.8);
+        }
+        input, textarea {
+            padding: 13px 20px;
+            font-size: 15px;
+            border: 1px solid rgb(<?php echo $primaryColor; ?>);
+            border-radius: 3px;
+        }
+        button.secondary, input[type="reset"], input[type="button"].secondary, input[type="reset"].secondary, input[type="submit"].secondary {
+            font-family: <?php echo $googleFontFamily; ?>;
+            text-transform: uppercase;
+            background-color: rgba(<?php echo $primaryColor; ?>,0.5);
+            border-radius: 2px;
+            border: 1px solid rgb(<?php echo $primaryColor; ?>);
+            color: #ffffff;
+            padding: 11px 32px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button.secondary:hover, input[type="reset"]:hover, input[type="button"].secondary:hover, input[type="reset"].secondary:hover, input[type="submit"].secondary:hover {
+            background-color: rgba(<?php echo $primaryColor; ?>,0.8);
+        }
+        fieldset {
+            border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
+        }
     </style>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('select').prettyDropdown({
+                classic:true
+            });
+        });
+    </script>
+
+    </script>
     <?php
 }
 
