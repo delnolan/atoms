@@ -54,79 +54,6 @@ function atoms_options()
 
         <?php
 
-        //If h3 is set upsert the option
-        if (isset($_POST['h6Size'])) {
-            $h6Size = get_option('h6_size');
-            if (!isset($h6Size)) {//If there's no google font then create the option
-                add_option('h6_size', $_POST['h6Size']);
-            } else { //else insert the option
-                update_option('h6_size', $_POST['h6Size']);
-            }
-        }
-        //Get h1 after it has been sent
-        $h6Size = get_option('h6_size');
-
-        //If h3 is set upsert the option
-        if (isset($_POST['h5Size'])) {
-            $h5Size = get_option('h5_size');
-            if (!isset($h5Size)) {//If there's no google font then create the option
-                add_option('h5_size', $_POST['h5Size']);
-            } else { //else insert the option
-                update_option('h5_size', $_POST['h5Size']);
-            }
-        }
-        //Get h1 after it has been sent
-        $h5Size = get_option('h5_size');
-
-        //If h4 is set upsert the option
-        if (isset($_POST['h4Size'])) {
-            $h4Size = get_option('h4_size');
-            if (!isset($h4Size)) {//If there's no google font then create the option
-                add_option('h4_size', $_POST['h4Size']);
-            } else { //else insert the option
-                update_option('h4_size', $_POST['h4Size']);
-            }
-        }
-        //Get h1 after it has been sent
-        $h4Size = get_option('h4_size');
-
-        //If h3 is set upsert the option
-        if (isset($_POST['h3Size'])) {
-            $h3Size = get_option('h3_size');
-            if (!isset($h3Size)) {//If there's no google font then create the option
-                add_option('h3_size', $_POST['h3Size']);
-            } else { //else insert the option
-                update_option('h3_size', $_POST['h3Size']);
-            }
-        }
-        //Get h1 after it has been sent
-        $h3Size = get_option('h3_size');
-
-
-        //If h2 is set upsert the option
-        if (isset($_POST['h2Size'])) {
-            $h2Size = get_option('h2_size');
-            if (!isset($h2Size)) {//If there's no google font then create the option
-                add_option('h2_size', $_POST['h2Size']);
-            } else { //else insert the option
-                update_option('h2_size', $_POST['h2Size']);
-            }
-        }
-        //Get h1 after it has been sent
-        $h2Size = get_option('h2_size');
-
-        //If fontSize is set upsert the option
-        if (isset($_POST['h1Size'])) {
-            $h1Size = get_option('h1_size');
-            if (!isset($h1Size)) {//If there's no google font then create the option
-                add_option('h1_size', $_POST['h1Size']);
-            } else { //else insert the option
-                update_option('h1_size', $_POST['h1Size']);
-            }
-        }
-        //Get the google font after it has been sent
-        $h1Size = get_option('h1_size');
-
         //If fontSize is set upsert the option
         if (isset($_POST['fontSize'])) {
             $fontSize = get_option('font_size');
@@ -212,56 +139,6 @@ function atoms_options()
             <input type="submit"/>
         </form><br/>
 
-        <!-- Set h1 size -->
-        <form method="post" action="">
-            <label>H1 font size</label><br/>
-            <input name="h1Size" type="text"
-                   value="<?php echo($h1Size ? $h1Size : 'H1 font size') ?>"/>
-            <input type="submit"/>
-        </form><br/>
-
-        <!-- Set h2 size-->
-        <form method="post" action="">
-            <label>H2 font size</label><br/>
-            <input name="h2Size" type="text"
-                   value="<?php echo($h2Size ? $h2Size : 'H2 font size') ?>"/>
-            <input type="submit"/>
-        </form><br/>
-
-        <!-- Set h3 size-->
-        <form method="post" action="">
-            <label>H3 font size</label><br/>
-            <input name="h3Size" type="text"
-                   value="<?php echo($h3Size ? $h3Size : 'H3 font size') ?>"/>
-            <input type="submit"/>
-        </form><br/>
-
-        <!-- Set h4 size-->
-        <form method="post" action="">
-            <label>H4 font size</label><br/>
-            <input name="h4Size" type="text"
-                   value="<?php echo($h4Size ? $h4Size : 'H4 font size') ?>"/>
-            <input type="submit"/>
-        </form><br/>
-
-        <!-- Set h5 size-->
-        <form method="post" action="">
-            <label>H5 font size</label><br/>
-            <input name="h5Size" type="text"
-                   value="<?php echo($h5Size ? $h5Size : 'H5 font size') ?>"/>
-            <input type="submit"/>
-        </form><br/>
-
-        <!-- Set h6 size-->
-        <form method="post" action="">
-            <label>H6 font size</label><br/>
-            <input name="h6Size" type="text"
-                   value="<?php echo($h6Size ? $h6Size : 'H6 font size') ?>"/>
-            <input type="submit"/>
-        </form><br/>
-
-
-
     </div>
 
 
@@ -276,12 +153,13 @@ function hook_css()
     $googleFontFamily = stripslashes(htmlspecialchars(get_option('google_font_family')));
     $primaryColor = get_option('primary_color');
     $fontSize = stripslashes(htmlspecialchars(get_option('font_size')));
-    $h1Size = get_option('h1_size');
-    $h2Size = get_option('h2_size');
-    $h3Size = get_option('h3_size');
-    $h4Size = get_option('h4_size');
-    $h5Size = get_option('h5_size');
-    $h6Size = get_option('h6_size');
+    $h1Size = round($fontSize * 2.5);
+    $h2Size = round($fontSize * 2.2);
+    $h3Size = round($fontSize * 2);
+    $h4Size = round($fontSize * 1.8);
+    $h5Size = round($fontSize * 1.5);
+    $h6Size = round($fontSize * 1.2);
+    $smallerFont = round($fontSize * 0.8);
 
     //Add the link for the google font
     echo html_entity_decode($googleFont);
@@ -289,7 +167,7 @@ function hook_css()
     //Apply the style for the google font
     ?>
     <style>
-        p, div, h1, h2, h3, h4, h5, h6 , a , label, .page .panel-content .entry-title, .page-title, body.page:not(.twentyseventeen-front-page) .entry-title, .archive-title, .page-title, .widget-title, .entry-content th, .comment-content th, .widget-area .widget a:visited{
+        p, div, h1, h2, h3, h4, h5, h6 , a , label, .page .panel-content .entry-title, .page-title, body.page:not(.twentyseventeen-front-page) .entry-title, .archive-title, .page-title, .widget-title, .entry-content th, .comment-content th, .widget-area .widget a:visited, .prettydropdown > ul{
              font-family: '<?php echo html_entity_decode($googleFontFamily); ?>';
              color: rgba(<?php echo $primaryColor; ?>, 0.9) !important;
          }
@@ -299,24 +177,35 @@ function hook_css()
         }
         input:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="range"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="week"]:focus, input[type="time"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="color"]:focus, textarea:focus {
             color: rgba(<?php echo $primaryColor; ?>, 1);
+            border: 1px solid rgba(<?php echo $primaryColor; ?>, 0.5   );
+            outline: 0px;
+        }
+        table, tr, td{
+            font-size: <?php echo $smallerFont; ?>px;
         }
         h1, .entry-content h1, .comment-content h1{
             font-size: <?php echo $h1Size;  ?>px;
+            line-height: <?php echo $h1Size;  ?>px;
         }
         h2, .entry-content h2, .comment-content h2{
             font-size: <?php echo $h2Size;  ?>px;
+            line-height: <?php echo $h2Size;  ?>px;
         }
         h3, .entry-content h3, .comment-content h3{
             font-size: <?php echo $h3Size;  ?>px;
+            line-height: <?php echo $h3Size;  ?>px;
         }
         h4, .entry-content h4, .comment-content h4{
             font-size: <?php echo $h4Size;  ?>px;
+            line-height: <?php echo $h4Size;  ?>px;
         }
         h5, .entry-content h5, .comment-content h5{
             font-size: <?php echo $h5Size;  ?>px;
+            line-height: <?php echo $h5Size;  ?>px;
         }
         h6, .entry-content h6, .comment-content h6{
             font-size: <?php echo $h6Size;  ?>px;
+            line-height: <?php echo $h6Size;  ?>px;
         }
         p{
             font-size: <?php echo $fontSize . 'px'; ?>;
@@ -463,8 +352,17 @@ function hook_css()
         .prettydropdown.arrow > ul > li.selected:before{
             border-top-color: rgba(<?php echo $primaryColor; ?>,0.5);
         }
+        .prettydropdown > ul.active > li.nohover {
+            color: rgba(<?php echo $primaryColor; ?>, 0.7) !important;
+        }
         .entry-meta .meta-home-blog{
             border-bottom: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
+        }
+        .entry-content table, .comment-content table {
+            border-bottom: 1px solid rgba(<?php echo $primaryColor; ?>, 0.9);
+        }
+        .entry-content td, .comment-content td {
+            border-top: 0 none;
         }
     </style>
     <script>
