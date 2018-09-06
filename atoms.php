@@ -289,9 +289,9 @@ function hook_css()
     //Apply the style for the google font
     ?>
     <style>
-        p, div, h1, h2, h3, h4, h5, h6 , a , label, .page .panel-content .entry-title, .page-title, body.page:not(.twentyseventeen-front-page) .entry-title{
+        p, div, h1, h2, h3, h4, h5, h6 , a , label, .page .panel-content .entry-title, .page-title, body.page:not(.twentyseventeen-front-page) .entry-title, .archive-title, .page-title, .widget-title, .entry-content th, .comment-content th, .widget-area .widget a:visited{
              font-family: '<?php echo html_entity_decode($googleFontFamily); ?>';
-             color: rgba(<?php echo $primaryColor; ?>, 0.9);
+             color: rgba(<?php echo $primaryColor; ?>, 0.9) !important;
          }
         input , textarea{
             font-family: '<?php echo html_entity_decode($googleFontFamily); ?>';
@@ -393,19 +393,23 @@ function hook_css()
             border: 1px solid rgb(<?php echo $primaryColor; ?>);
             border-radius: 3px;
         }
-        button.secondary, input[type="reset"], input[type="button"].secondary, input[type="reset"].secondary, input[type="submit"].secondary {
+        button.secondary, input[type="reset"], input[type="button"].secondary, input[type="reset"].secondary, input[type="submit"].secondary, input[type="submit"], .read-more, .nav-previous a, .nav-next a, button{
             font-family: <?php echo $googleFontFamily; ?>;
             text-transform: uppercase;
             background-color: rgba(<?php echo $primaryColor; ?>,0.5);
+            background-image: none;
             border-radius: 2px;
             border: 1px solid rgb(<?php echo $primaryColor; ?>);
-            color: #ffffff;
+            color: #ffffff !important;
             padding: 11px 32px;
             cursor: pointer;
             font-weight: 600;
         }
-        button.secondary:hover, input[type="reset"]:hover, input[type="button"].secondary:hover, input[type="reset"].secondary:hover, input[type="submit"].secondary:hover {
+        button.secondary:hover, input[type="reset"]:hover, input[type="button"].secondary:hover, input[type="reset"].secondary:hover, input[type="submit"].secondary:hover , input[type="submit"]:hover , .read-more:hover, .nav-previous a:hover, .nav-next a:hover, button:hover{
             background-color: rgba(<?php echo $primaryColor; ?>,0.8);
+            background-image: none !important;
+            webkit-box-shadow: none !important;
+            box-shadow: none !important;
         }
         fieldset {
             border: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
@@ -458,6 +462,9 @@ function hook_css()
         }
         .prettydropdown.arrow > ul > li.selected:before{
             border-top-color: rgba(<?php echo $primaryColor; ?>,0.5);
+        }
+        .entry-meta .meta-home-blog{
+            border-bottom: 1px solid rgba(<?php echo $primaryColor; ?>,0.5);
         }
     </style>
     <script>
